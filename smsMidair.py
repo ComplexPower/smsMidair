@@ -11,9 +11,9 @@ client = TwilioRestClient(hexchat.get_pluginpref("ACCOUNT_SID"), hexchat.get_plu
 
 def sendSMS(nick,phNumber,gameType) :
 	try :
-		client.messages.create(to=phNumber, from_=hexchat.get_pluginpref("twilioPh")[1:13],
+		client.messages.create(to=phNumber, from_=hexchat.get_pluginpref("twilioPh")[1:14],
 			body=__module_name__ + ": " + gameType + " game starting for " + nick)
-		hexchat.command("msg " + nick + " " + gameType + " game started, SMS sent, removed from queue.")
+		hexchat.command("msg " + nick + " " + gameType + " game started, SMS sent, removed from queue. Temptest")
 	except TwilioRestException :
 		hexchat.command("msg " + nick + " Game started, but your phone number returned an error.\
 		Consider !validate once you have added your phone number, or refer to the example in !help or !commands.")
@@ -35,7 +35,7 @@ def chanParse_cb(word, word_eol, userdata) :
 			if (text[0] == 'Game') & (text[3] == 'starting') :
 				for x in hexchat.list_pluginpref() :				# Cycle through stored names/numbers and send the texts
 					if word[1].find(x) > 0 :						# Verifies user is in echoed queue when game starts
-						y = hexchat.get_pluginpref(x)[1:13]			# Removes the necessary period from the stored string 
+						y = hexchat.get_pluginpref(x)[1:14]			# Removes the necessary period from the stored string 
 						sendSMS(x,y,text[1])						# (nick, phNumber, gameType)
 						hexchat.del_pluginpref(x)					# Cleanup to remove the notified players from the queue
 			elif word[1].find('has not returned and has lost their space in the queue.') > 0 :
