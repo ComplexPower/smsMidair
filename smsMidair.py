@@ -13,7 +13,7 @@ def sendSMS(nick,phNumber,gameType) :
 	try :
 		client.messages.create(to=phNumber, from_=hexchat.get_pluginpref("twilioPh")[1:14],
 			body=__module_name__ + ": " + gameType + " game starting for " + nick)
-		hexchat.command("msg " + nick + " " + gameType + " game started, SMS sent, removed from queue. Temptest")
+		hexchat.command("msg " + nick + " " + gameType + " game started, SMS sent, removed from queue.")
 	except TwilioRestException :
 		hexchat.command("msg " + nick + " Game started, but your phone number returned an error.\
 		Consider !validate once you have added your phone number, or refer to the example in !help or !commands.")
